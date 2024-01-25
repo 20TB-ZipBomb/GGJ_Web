@@ -1,8 +1,11 @@
 <script lang="ts">
+	import BigText from '$lib/components/big-text.svelte';
+	import MyNameIs from '$lib/components/my-name-is.svelte';
+	import StylizedButton from '$lib/components/stylized-button.svelte';
 </script>
 
-<h1>Join a game</h1>
-<h2>Name</h2>
+<BigText text="Jobbers" />
+<MyNameIs />
 <h2>Room Code</h2>
 
-<button>Join Game</button>
+<StylizedButton text="Join Game" />
