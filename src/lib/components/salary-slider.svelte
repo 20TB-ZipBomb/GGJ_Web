@@ -4,7 +4,7 @@
 
   const dispatch = createEventDispatcher();
   function update() {
-		dispatch('salary', {
+		dispatch('salaryChanged', {
 			salary: salary
 		});
 	}
