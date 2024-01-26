@@ -1,8 +1,9 @@
 <script lang="ts">
 	export let text: String = '';
+	export let disabled: boolean = false;
 </script>
 
-<button on:click>{text}</button>
+<button class:disabled {disabled} on:click>{text}</button>
 
 <style>
 	/* Remove built in button styling */
@@ -19,5 +20,15 @@
 		box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.8);
 		border: 2px solid #eee;
 		color: #111;
+	}
+
+	button:hover {
+		background: #eee;
+	}
+
+	button:disabled {
+		background: #ccc;
+		color: #999;
+		cursor: not-allowed;
 	}
 </style>
