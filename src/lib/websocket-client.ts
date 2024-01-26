@@ -105,8 +105,7 @@ enum GameState {
 	JOB_PICKING,
 	INTERVIEWER,
 	VOTING,
-	INTERVIEWEE,
-	RESULTS
+	INTERVIEWEE
 }
 
 export class JobbersWebClient {
@@ -214,6 +213,14 @@ export class JobbersWebClient {
 		if (this.gameState == GameState.CONNECTING) {
 			this.playerId = message.player_id;
 			this.gameState = GameState.LOBBY;
+		} else if (this.gameState == GameState.JOB_PICKING) {
+			if (this.playerId == message.player_id) {
+				this.gameState = GameState.INTERVIEWEE;
+			} else {
+				this.gameState = GameState.INTERVIEWER;
+			}
+		} else {
+			console.error(`Received player id message while in state ${this.gameState}`);
 		}
 	};
 
@@ -229,7 +236,11 @@ export class JobbersWebClient {
 	};
 
 	onTimerFinishedMessage = (message: TimerFinishedMessage) => {
-		console.log(message);
+		if (this.gameState == GameState.INTERVIEWER) {
+			this.gameState = GameState.VOTING;
+		} else if (this.gameState == GameState.INTERVIEWEE) {
+			this.gameState = GameState.VOTING;
+		}
 	};
 
 	createJob = (jobText: string) => {
