@@ -7,7 +7,7 @@
 </script>
 
 <h1>Based their experience, award {userToJudge} a salary for a {jobTitle}</h1>
-<SalarySlider on:salary={(e)=>{console.log(e.detail.salary)}}/>
+<SalarySlider on:salaryChanged={(e)=>{console.log(e.detail.salary)}}/>
 <StylizedButton text="Confirm" />
 
 <style>
