@@ -3,14 +3,25 @@
 </div>
 
 <style>
+
+@keyframes scrollBackground {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -856px -1101px;
+    }
+}
+
 	:global(html) {
 		background: #0e1321;
 		margin: 0;
-		background-image: url('newspaper-ripped.jpg');
-		background-repeat: no-repeat;
+		background-image: url('classifieds-seamless-blur.png');
+		background-repeat: repeat;
 		background-attachment: fixed;
-		background-size: cover;
 		/* darken background image */
+
+    animation: scrollBackground 10s linear infinite;
 	}
 
 	:global(body) {
