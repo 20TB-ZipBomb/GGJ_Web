@@ -1,11 +1,11 @@
 <script lang="ts">
-	export let text: String = '';
+	export let name: String = '';
 </script>
 
 <div>
 	<p class="hello">HELLO</p>
 	<p class="my-name-is">my name is</p>
-	<input type="text" placeholder="Your name here" bind:value={text} />
+	<input type="text" placeholder="Your name here" bind:value={name} />
 </div>
 
 <style>
