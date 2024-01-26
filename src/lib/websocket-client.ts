@@ -1,7 +1,3 @@
-import { readable } from 'svelte/store';
-
-const WEBSOCKET_ADDRESS = 'ws://localhost:8080';
-
 enum MessageType {
 	/**
 	 * Client -> Server
@@ -137,8 +133,8 @@ export class JobbersWebClient {
 
 	websocket: WebSocket;
 
-	constructor() {
-		this.websocket = new WebSocket(WEBSOCKET_ADDRESS);
+	constructor(serverAddress: string) {
+		this.websocket = new WebSocket(serverAddress);
 		this.websocket.onopen = this.onOpen;
 		this.websocket.onclose = this.onClose;
 		this.websocket.onerror = this.onError;
