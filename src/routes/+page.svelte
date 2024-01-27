@@ -17,6 +17,7 @@
 
 	function joinGame(): void {
 		jobberClient = new JobbersWebClient(serverAddress);
+		//test
 	}
 
 	onMount(() => {
