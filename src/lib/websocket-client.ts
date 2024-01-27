@@ -215,7 +215,10 @@ export class JobbersWebClient {
 		if (this.gameState == ClientState.CONNECTING) {
 			this.playerId = message.player_id;
 			this.gameState = ClientState.LOBBY;
-		} else if (this.gameState == ClientState.JOB_PICKING) {
+		} else if (
+			this.gameState == ClientState.JOB_PICKING ||
+			this.gameState == ClientState.JOB_PICKING_DONE
+		) {
 			if (this.playerId == message.player_id) {
 				this.gameState = ClientState.INTERVIEWEE;
 			} else {
@@ -227,7 +230,10 @@ export class JobbersWebClient {
 	};
 
 	onReceivedCardsMessage = (message: ReceivedCardsMessage) => {
-		if (this.gameState != ClientState.JOB_CREATION) {
+		if (
+			this.gameState != ClientState.JOB_CREATION &&
+			this.gameState != ClientState.JOB_CREATION_DONE
+		) {
 			console.error('Received cards while not during or at the end of job creation');
 			return;
 		}
