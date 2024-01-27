@@ -27,8 +27,8 @@
 		clientState = ClientState.CONNECTING;
 		jobberClient = new JobbersWebClient(serverAddress);
 		jobberClient.onOpen = () => {
-			console.log('connected');
-			// jobberClient.sendJoinGame(roomCode, name);
+			console.log('WebSocket connection opened');
+			jobberClient.sendLobbyJoinAttempt(roomCode, name);
 		};
 		jobberClient.onGameStateChanged = (oldGameState: ClientState, newGameState: ClientState) => {
 			clientState = newGameState;
