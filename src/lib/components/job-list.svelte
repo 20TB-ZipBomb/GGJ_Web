@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Job from './job.svelte';
+	import type { Card } from '$lib/websocket-client';
 
-	export let jobs: any;
+	export let jobs: Card[] = [];
 	export let height = '80%';
 
 	let currentSelection = '';
@@ -17,8 +18,8 @@
 </script>
 
 <div style={`height: ${height};`}>
-	{#each jobs as { title }, job}
-		<Job {title} isSelected={currentSelection == title} on:jobSelected={onJobSelect} />
+	{#each jobs as { job_text }, job}
+		<Job title={job_text} isSelected={currentSelection == job_text} on:jobSelected={onJobSelect} />
 	{/each}
 </div>
 
