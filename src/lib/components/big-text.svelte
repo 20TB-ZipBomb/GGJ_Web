@@ -6,11 +6,12 @@
 
 <style>
 	h1 {
+		font-family: 'Chomsky';
 		width: 100%;
 		text-align: center;
 		font-size: 5em;
-		color: #eee;
-		text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+		color: white;
+		text-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
 		margin: 0;
 	}
 </style>
