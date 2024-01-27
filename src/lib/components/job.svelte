@@ -1,17 +1,11 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
 	export let title = 'Job Title';
 	export let isSelected = false;
-
-	const dispatch = createEventDispatcher();
-	function select() {
-		dispatch('jobSelected', {
-			title: title
-		});
-	}
 </script>
 
-<p on:click={select} style={isSelected ? 'border: 2px solid #008000' : ''}>{title}</p>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<p on:click class:isSelected>{title}</p>
 
 <style>
 	p {
@@ -20,5 +14,9 @@
 		font-size: 2em;
 		margin: 5%;
 		text-align: center;
+	}
+
+	p.isSelected {
+		border: 2px solid #008000;
 	}
 </style>
