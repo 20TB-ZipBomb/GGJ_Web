@@ -294,4 +294,18 @@ export class JobbersWebClient {
 			console.error(`Cannot send card data when in state ${this.gameState}`);
 		}
 	};
+
+	sendScoreSubmission = (salaryCents: number) => {
+		if (this.gameState != ClientState.VOTING) {
+			console.error(`Cannot submit score when not in voting state`);
+			return;
+		}
+		this.websocket.send(
+			JSON.stringify({
+				message_type: MessageType.SCORE_SUBMISSION,
+				score_in_cents: salaryCents
+			} as ScoreSubmissionMessage)
+		);
+		this.gameState = ClientState.VOTING_DONE;
+	};
 }
