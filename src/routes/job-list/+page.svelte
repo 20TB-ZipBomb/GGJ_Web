@@ -25,4 +25,7 @@
 </script>
 
 <JobList bind:selectedJob {jobs} />
-<StylizedButton text={selectedJob ? `Confirm ${selectedJob.job_text}` : 'Pick a job'} />
+<StylizedButton
+	disabled={selectedJob == null}
+	text={selectedJob ? `Confirm ${selectedJob.job_text}` : 'Pick a job'}
+/>
