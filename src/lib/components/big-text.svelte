@@ -7,11 +7,13 @@
 <style>
 	h1 {
 		font-family: 'Chomsky';
-		width: 100%;
+		width: calc(100% - 40px);
 		text-align: center;
 		font-size: 5em;
 		color: white;
-		text-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
+		text-shadow:
+			2px 2px 10px rgba(0, 0, 0, 1),
+			4px 4px 0px rgba(0, 0, 0, 0.8);
 		margin: 0;
 	}
 </style>
