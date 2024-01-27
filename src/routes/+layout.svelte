@@ -1,17 +1,14 @@
-<div>
-	<slot />
-</div>
+<slot />
 
 <style>
-
-@keyframes scrollBackground {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: -856px -1101px;
-    }
-}
+	@keyframes scrollBackground {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: -856px -1101px;
+		}
+	}
 
 	:global(html) {
 		background: #0e1321;
@@ -21,14 +18,11 @@
 		background-attachment: fixed;
 		/* darken background image */
 
-    animation: scrollBackground 10s linear infinite;
+		animation: scrollBackground 10s linear infinite;
 	}
 
 	:global(body) {
 		margin: 0;
-	}
-
-	div {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
