@@ -1,10 +1,13 @@
 <script>
-	import { goto } from "$app/navigation";
-  import Spinner from "$lib/components/spinner.svelte";
+	import { goto } from '$app/navigation';
+	import Spinner from '$lib/components/spinner.svelte';
+	import { onMount } from 'svelte';
 
-  setTimeout(()=>{
-    goto("job-form");
-  }, 300);
+	onMount(() => {
+		setTimeout(() => {
+			goto('job-form');
+		}, 300);
+	});
 </script>
 
-<Spinner/>
+<Spinner />
