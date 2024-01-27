@@ -1,6 +1,11 @@
 <slot />
 
 <style>
+	@font-face {
+		font-family: 'Chomsky';
+		src: url('/chomsky.regular.otf') format('opentype');
+	}
+
 	@keyframes scrollBackground {
 		from {
 			background-position: 0 0;
