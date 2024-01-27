@@ -95,6 +95,7 @@ export type Card = {
 };
 
 export enum ClientState {
+	MENU,
 	CONNECTING,
 	LOBBY,
 	JOB_CREATION,
