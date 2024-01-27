@@ -249,6 +249,20 @@ export class JobbersWebClient {
 		}
 	};
 
+	sendLobbyJoinAttempt = (name: string, lobbyCode: string) => {
+		if (this.gameState != ClientState.CONNECTING) {
+			console.error('Cannot join lobby when not in connecting state');
+			return;
+		}
+		this.websocket.send(
+			JSON.stringify({
+				message_type: MessageType.LOBBY_JOIN_ATTEMPT,
+				name: name,
+				lobby_code: lobbyCode
+			} as LobbyJoinAttemptMessage)
+		);
+	};
+
 	createJob = (jobText: string) => {
 		if (this.gameState != ClientState.JOB_CREATION) {
 			console.error('Cannot create job when not in job creation state');
