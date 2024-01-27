@@ -40,51 +40,51 @@ enum MessageType {
 /**
  * A message sent between the client and server.
  */
-type Message = {
+export type Message = {
 	message_type: MessageType;
 };
 
-type ConnectionRejectedMessage = Message & {
+export type ConnectionRejectedMessage = Message & {
 	message_type: MessageType.CONNECTION_REJECTED;
 };
 
-type LobbyJoinAttemptMessage = Message & {
+export type LobbyJoinAttemptMessage = Message & {
 	message_type: MessageType.LOBBY_JOIN_ATTEMPT;
 	name: string;
 	lobby_code: string;
 };
 
-type GameStartMessage = Message & {
+export type GameStartMessage = Message & {
 	message_type: MessageType.GAME_START;
 	number_of_jobs: number;
 };
 
-type JobSubmittedMessage = Message & {
+export type JobSubmittedMessage = Message & {
 	message_type: MessageType.JOB_SUBMITTED;
 	job_input: string;
 };
 
-type PlayerIdMessage = Message & {
+export type PlayerIdMessage = Message & {
 	message_type: MessageType.PLAYER_ID;
 	player_id: string;
 };
 
-type ReceivedCardsMessage = Message & {
+export type ReceivedCardsMessage = Message & {
 	message_type: MessageType.RECEIVED_CARDS;
 	drawn_cards: Card[];
 	job_card: Card;
 };
 
-type CardDataMessage = Message & {
+export type CardDataMessage = Message & {
 	message_type: MessageType.CARD_DATA;
 	card: Card;
 };
 
-type TimerFinishedMessage = Message & {
+export type TimerFinishedMessage = Message & {
 	message_type: MessageType.TIMER_FINISHED;
 };
 
-type ScoreSubmissionMessage = Message & {
+export type ScoreSubmissionMessage = Message & {
 	message_type: MessageType.SCORE_SUBMISSION;
 	score_in_cents: number;
 };
