@@ -1,18 +1,28 @@
-<script>
+<script lang="ts">
 	import JobList from '$lib/components/job-list.svelte';
 	import StylizedButton from '$lib/components/stylized-button.svelte';
-	let job = '';
+	import type { Card } from '$lib/websocket-client';
+	let jobs: Card[] = [
+		{
+			card_id: 1,
+			job_text: 'Fisher'
+		},
+		{
+			card_id: 2,
+			job_text: 'Lawyer'
+		},
+		{
+			card_id: 3,
+			job_text: 'Mechanic'
+		},
+		{
+			card_id: 4,
+			job_text: 'Dark overlord'
+		}
+	];
+
+	let selectedJob: Card | null = null;
 </script>
 
-<JobList
-	jobs={[
-		{ title: 'Fisher' },
-		{ title: 'Lawyer' },
-		{ title: 'Mechanic' },
-		{ title: 'Dark overlord' }
-	]}
-	on:jobSelected={(e) => {
-		job = e.detail.title;
-	}}
-/>
-<StylizedButton text={job && job.length ? `Confirm ${job}` : 'Pick a job'} />
+<JobList bind:selectedJob {jobs} />
+<StylizedButton text={selectedJob ? `Confirm ${selectedJob.job_text}` : 'Pick a job'} />
