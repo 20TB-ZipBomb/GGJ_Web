@@ -99,9 +99,12 @@ export enum ClientState {
 	CONNECTING,
 	LOBBY,
 	JOB_CREATION,
+	JOB_CREATION_DONE,
 	JOB_PICKING,
+	JOB_PICKING_DONE,
 	INTERVIEWER,
 	VOTING,
+	VOTING_DONE,
 	INTERVIEWEE
 }
 
@@ -152,8 +155,9 @@ export class JobbersWebClient {
 	};
 
 	onWSError = (event: Event) => {
-		console.log(`Websocket error`);
-		console.log(event);
+		console.error(`Websocket error`);
+		console.error(event);
+		this.onError();
 	};
 
 	onMessage = (event: MessageEvent) => {
@@ -257,6 +261,9 @@ export class JobbersWebClient {
 				job_input: jobText
 			} as JobSubmittedMessage)
 		);
+		if (this._jobsToCreateRemaining == 0) {
+			this.gameState = ClientState.JOB_CREATION_DONE;
+		}
 	};
 
 	sendCardData = (card_id: number) => {
@@ -274,6 +281,9 @@ export class JobbersWebClient {
 				} as CardDataMessage)
 			);
 			this.onCardsChanged(this.cards);
+			if (this.gameState == ClientState.JOB_PICKING) {
+				this.gameState = ClientState.JOB_PICKING_DONE;
+			}
 		} else {
 			console.error(`Cannot send card data when in state ${this.gameState}`);
 		}
