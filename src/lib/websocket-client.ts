@@ -111,7 +111,7 @@ export enum ClientState {
 export class JobbersWebClient {
 	private _gameState: ClientState = ClientState.CONNECTING;
 	private _jobsToCreateRemaining: number = 0;
-	private cards: Card[] = [];
+	public cards: Card[] = [];
 	private jobCard: Card = {
 		card_id: -1,
 		job_text: 'Unknown'
