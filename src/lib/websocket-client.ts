@@ -129,7 +129,6 @@ export class JobbersWebClient {
 	private playerId: string = '';
 
 	onGameJoinAttempFailed: (reason: string) => void = () => {};
-	onGameStarted: (numberOfJobs: number) => void = () => {};
 	onGameEnded: () => void = () => {};
 	onGameStateChanged: (oldGameState: ClientState, newGameState: ClientState) => void = () => {};
 	onJobCardChanged: (jobCard: Card) => void = () => {};
@@ -208,7 +207,6 @@ export class JobbersWebClient {
 		}
 		this.gameState = ClientState.JOB_CREATION;
 		this._jobsToCreateRemaining = message.number_of_jobs;
-		this.onGameStarted(message.number_of_jobs);
 	};
 
 	onPlayerIdMessage = (message: PlayerIdMessage) => {
