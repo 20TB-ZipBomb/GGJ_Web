@@ -126,6 +126,8 @@ export class JobbersWebClient {
 		this._gameState = value;
 	}
 
+	private roomCode: string = '';
+	private playerName: string = '';
 	private playerId: string = '';
 
 	onGameJoinAttempFailed: (reason: string) => void = () => {};
@@ -137,7 +139,9 @@ export class JobbersWebClient {
 
 	websocket: WebSocket;
 
-	constructor(serverAddress: string) {
+	constructor(serverAddress: string, roomCode: string, playerName: string) {
+		this.roomCode = roomCode;
+		this.playerName = playerName;
 		this.websocket = new WebSocket(serverAddress);
 		this.websocket.onopen = this.onOpen;
 		this.websocket.onclose = this.onClose;
@@ -147,6 +151,7 @@ export class JobbersWebClient {
 
 	onOpen = (event: Event) => {
 		console.log('Websocket opened');
+		this.sendLobbyJoinAttempt(this.playerName, this.roomCode);
 	};
 
 	onClose = (event: CloseEvent) => {

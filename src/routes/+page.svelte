@@ -25,11 +25,7 @@
 
 	function joinGame(): void {
 		clientState = ClientState.CONNECTING;
-		jobberClient = new JobbersWebClient(serverAddress);
-		jobberClient.onOpen = () => {
-			console.log('WebSocket connection opened');
-			jobberClient.sendLobbyJoinAttempt(roomCode, name);
-		};
+		jobberClient = new JobbersWebClient(serverAddress, roomCode, name);
 		jobberClient.onGameStateChanged = (oldGameState: ClientState, newGameState: ClientState) => {
 			clientState = newGameState;
 		};
