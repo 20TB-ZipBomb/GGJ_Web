@@ -4,14 +4,11 @@
 
 	let userToJudge = 'Dan';
 	let jobTitle = 'Plumber';
+	let salaryCents = 1;
 </script>
 
 <h1>Based their experience, award {userToJudge} a salary for a {jobTitle}</h1>
-<SalarySlider
-	on:salaryChanged={(e) => {
-		console.log(e.detail.salary);
-	}}
-/>
+<SalarySlider bind:salaryCents />
 <StylizedButton text="Confirm" />
 
 <style>

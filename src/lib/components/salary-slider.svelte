@@ -1,33 +1,18 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	let salary = 1;
+	export let salaryCents = 1;
 
 	const numberFormatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
 		currency: 'USD',
 		minimumFractionDigits: 2
 	});
-
-	const dispatch = createEventDispatcher();
-	function update() {
-		dispatch('salaryChanged', {
-			salary: salary
-		});
-	}
 </script>
 
 <div class="slider-container">
 	<div class="input-container">
-		<input
-			bind:value={salary}
-			type="range"
-			min="1"
-			max="100000"
-			orient="vertical"
-			on:change={update}
-		/>
+		<input bind:value={salaryCents} type="range" min="1" max="100000" orient="vertical" />
 	</div>
-	<h1 class="salary-label">{numberFormatter.format(salary / 100)}</h1>
+	<h1 class="salary-label">{numberFormatter.format(salaryCents / 100)}</h1>
 </div>
 
 <style>
