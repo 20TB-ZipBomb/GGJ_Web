@@ -29,15 +29,15 @@
 
 <style>
 	input {
-		width: calc(100% - 20px);
-		font-size: 2em;
+		width: min(100%, 400px);
+		font-size: 1.8em;
 		border: none;
-		margin-left: 10px;
 		text-align: center;
 		margin-bottom: 10px;
 		margin-top: 10px;
 		height: 100px;
 		font-weight: bold;
 		border-radius: 4px;
+		box-shadow: 0px 0px 8px rgba(0, 0, 0, 1);
 	}
 </style>
