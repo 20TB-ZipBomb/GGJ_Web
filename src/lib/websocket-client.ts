@@ -203,6 +203,7 @@ export class JobbersWebClient {
 	onConnectionRejectedMessage = (message: ConnectionRejectedMessage) => {
 		this.websocket.close();
 		this.onGameJoinAttempFailed('No game found with that code');
+		this.gameState = ClientState.MENU;
 	};
 
 	onGameStartMessage = (message: GameStartMessage) => {
