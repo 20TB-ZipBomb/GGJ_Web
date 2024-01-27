@@ -2,6 +2,12 @@
 	import { createEventDispatcher } from 'svelte';
 	let salary = 1;
 
+	const numberFormatter = new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD',
+		minimumFractionDigits: 2
+	});
+
 	const dispatch = createEventDispatcher();
 	function update() {
 		dispatch('salaryChanged', {
@@ -16,12 +22,12 @@
 			bind:value={salary}
 			type="range"
 			min="1"
-			max="100"
+			max="100000"
 			orient="vertical"
 			on:change={update}
 		/>
 	</div>
-	<h1 class="salary-label">{salary}k</h1>
+	<h1 class="salary-label">{numberFormatter.format(salary / 100)}</h1>
 </div>
 
 <style>
