@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import BigText from '$lib/components/big-text.svelte';
 	import MyNameIs from '$lib/components/my-name-is.svelte';
 	import StylizedButton from '$lib/components/stylized-button.svelte';
