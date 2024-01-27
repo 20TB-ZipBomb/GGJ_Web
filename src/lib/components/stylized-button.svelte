@@ -20,7 +20,10 @@
 		box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.8);
 		border: 2px solid #eee;
 		color: #111;
-		transition: transform 0.1s ease-in-out;
+		transition:
+			transform 0.1s ease-in-out,
+			background 0.1s ease-in-out,
+			color 0.1s ease-in-out;
 	}
 
 	button:hover {
