@@ -1,51 +1,56 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-  let salary = 1;
+	import { createEventDispatcher } from 'svelte';
+	let salary = 1;
 
-  const dispatch = createEventDispatcher();
-  function update() {
+	const dispatch = createEventDispatcher();
+	function update() {
 		dispatch('salaryChanged', {
 			salary: salary
 		});
 	}
-    
 </script>
 
 <div class="slider-container">
-  <div class="input-container">
-    <input bind:value={salary} type="range" min="1" max="100" orient="vertical" on:change={update} />
-  </div>
-    <h1 class="salary-label">{salary}k </h1>
+	<div class="input-container">
+		<input
+			bind:value={salary}
+			type="range"
+			min="1"
+			max="100"
+			orient="vertical"
+			on:change={update}
+		/>
+	</div>
+	<h1 class="salary-label">{salary}k</h1>
 </div>
 
 <style>
-  .slider-container {
-    height: 40%;
-    width: 80%;
-    display: flex;
-    align-items: center;
-  }
+	.slider-container {
+		height: 40%;
+		width: 80%;
+		display: flex;
+		align-items: center;
+	}
 
-  .salary-label {
-    text-align: center;
-    font-size: 50pt;
-    display: inline;
-    margin: auto;
-  }
+	.salary-label {
+		text-align: center;
+		font-size: 50pt;
+		display: inline;
+		margin: auto;
+	}
 
-  input {
-    height: 100%;
-    left: 10px;
-    display: inline;
-    margin: auto;
-    appearance: slider-vertical;
-    display: inline;
-  }
+	input {
+		height: 100%;
+		left: 10px;
+		display: inline;
+		margin: auto;
+		appearance: slider-vertical;
+		display: inline;
+	}
 
-  .input-container {
-    width: 20%;
-    height: 100%;
-    display: inline;
-  }
-
+	.input-container {
+		width: 20%;
+		height: 100%;
+		display: inline;
+	}
 </style>
