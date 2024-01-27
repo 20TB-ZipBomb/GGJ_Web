@@ -94,7 +94,7 @@ export type Card = {
 	job_text: string;
 };
 
-enum GameState {
+export enum ClientState {
 	CONNECTING,
 	LOBBY,
 	JOB_CREATION,
@@ -105,7 +105,7 @@ enum GameState {
 }
 
 export class JobbersWebClient {
-	private _gameState: GameState = GameState.CONNECTING;
+	private _gameState: ClientState = ClientState.CONNECTING;
 	private _jobsToCreateRemaining: number = 0;
 	private cards: Card[] = [];
 	private jobCard: Card = {
@@ -117,7 +117,7 @@ export class JobbersWebClient {
 		return this._gameState;
 	}
 
-	private set gameState(value: GameState) {
+	private set gameState(value: ClientState) {
 		this.onGameStateChanged(this._gameState, value);
 		this._gameState = value;
 	}
@@ -127,9 +127,10 @@ export class JobbersWebClient {
 	onGameJoinAttempFailed: (reason: string) => void = () => {};
 	onGameStarted: (numberOfJobs: number) => void = () => {};
 	onGameEnded: () => void = () => {};
-	onGameStateChanged: (oldGameState: GameState, newGameState: GameState) => void = () => {};
+	onGameStateChanged: (oldGameState: ClientState, newGameState: ClientState) => void = () => {};
 	onJobCardChanged: (jobCard: Card) => void = () => {};
 	onCardsChanged: (cards: Card[]) => void = () => {};
+	onError: () => void = () => {};
 
 	websocket: WebSocket;
 
@@ -137,7 +138,7 @@ export class JobbersWebClient {
 		this.websocket = new WebSocket(serverAddress);
 		this.websocket.onopen = this.onOpen;
 		this.websocket.onclose = this.onClose;
-		this.websocket.onerror = this.onError;
+		this.websocket.onerror = this.onWSError;
 		this.websocket.onmessage = this.onMessage;
 	}
 
@@ -149,7 +150,7 @@ export class JobbersWebClient {
 		console.log('Websocket closed');
 	};
 
-	onError = (event: Event) => {
+	onWSError = (event: Event) => {
 		console.log(`Websocket error`);
 		console.log(event);
 	};
@@ -196,24 +197,24 @@ export class JobbersWebClient {
 	};
 
 	onGameStartMessage = (message: GameStartMessage) => {
-		if (this.gameState != GameState.LOBBY) {
+		if (this.gameState != ClientState.LOBBY) {
 			console.error('Received game start message while not in lobby');
 			return;
 		}
-		this.gameState = GameState.JOB_CREATION;
+		this.gameState = ClientState.JOB_CREATION;
 		this._jobsToCreateRemaining = message.number_of_jobs;
 		this.onGameStarted(message.number_of_jobs);
 	};
 
 	onPlayerIdMessage = (message: PlayerIdMessage) => {
-		if (this.gameState == GameState.CONNECTING) {
+		if (this.gameState == ClientState.CONNECTING) {
 			this.playerId = message.player_id;
-			this.gameState = GameState.LOBBY;
-		} else if (this.gameState == GameState.JOB_PICKING) {
+			this.gameState = ClientState.LOBBY;
+		} else if (this.gameState == ClientState.JOB_PICKING) {
 			if (this.playerId == message.player_id) {
-				this.gameState = GameState.INTERVIEWEE;
+				this.gameState = ClientState.INTERVIEWEE;
 			} else {
-				this.gameState = GameState.INTERVIEWER;
+				this.gameState = ClientState.INTERVIEWER;
 			}
 		} else {
 			console.error(`Received player id message while in state ${this.gameState}`);
@@ -221,26 +222,26 @@ export class JobbersWebClient {
 	};
 
 	onReceivedCardsMessage = (message: ReceivedCardsMessage) => {
-		if (this.gameState != GameState.JOB_CREATION) {
+		if (this.gameState != ClientState.JOB_CREATION) {
 			console.error('Received cards while not during or at the end of job creation');
 			return;
 		}
 		this.cards = message.drawn_cards;
 		this.jobCard = message.job_card;
 		this.onJobCardChanged(this.jobCard);
-		this.gameState = GameState.JOB_PICKING;
+		this.gameState = ClientState.JOB_PICKING;
 	};
 
 	onTimerFinishedMessage = (message: TimerFinishedMessage) => {
-		if (this.gameState == GameState.INTERVIEWER) {
-			this.gameState = GameState.VOTING;
-		} else if (this.gameState == GameState.INTERVIEWEE) {
-			this.gameState = GameState.VOTING;
+		if (this.gameState == ClientState.INTERVIEWER) {
+			this.gameState = ClientState.VOTING;
+		} else if (this.gameState == ClientState.INTERVIEWEE) {
+			this.gameState = ClientState.VOTING;
 		}
 	};
 
 	createJob = (jobText: string) => {
-		if (this.gameState != GameState.JOB_CREATION) {
+		if (this.gameState != ClientState.JOB_CREATION) {
 			console.error('Cannot create job when not in job creation state');
 			return;
 		}
@@ -258,7 +259,7 @@ export class JobbersWebClient {
 	};
 
 	sendCardData = (card_id: number) => {
-		if (this.gameState == GameState.JOB_PICKING || this.gameState == GameState.INTERVIEWER) {
+		if (this.gameState == ClientState.JOB_PICKING || this.gameState == ClientState.INTERVIEWER) {
 			let card: Card | undefined = this.cards.find((c) => c.card_id == card_id);
 			if (card == undefined) {
 				console.error(`Cannot find card with id ${card_id}`);
