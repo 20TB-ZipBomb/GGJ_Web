@@ -18,6 +18,7 @@
 
 <input type="text" placeholder="Lawyer, Pirate, etc." bind:value={text} bind:this={input} />
 <StylizedButton
+	disabled={text.length === 0}
 	text="Submit"
 	on:click={() => {
 		submitJobTitle();
