@@ -101,6 +101,7 @@
 		}}
 	/>
 {:else if clientState == ClientState.VOTING}
+	<BigText text="Award Salary" />
 	<SalarySlider bind:salaryCents />
 	<StylizedButton
 		text="Confirm"
