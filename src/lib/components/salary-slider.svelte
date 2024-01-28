@@ -22,7 +22,6 @@
 	});
 </script>
 
-<BigText text="Salary" />
 <div class="slider-container">
 	<input bind:value={salaryCents} type="range" min="1" max={MAX_SALARY} orient="vertical" />
 	<h2
