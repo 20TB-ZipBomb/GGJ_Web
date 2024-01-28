@@ -16,7 +16,9 @@
 		background-color: red;
 		border-radius: 10px;
 		max-width: min(400px, 80%);
-		box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.8);
+		box-shadow:
+			4px 4px 6px rgba(0, 0, 0, 0.8),
+			0px 0px 4px rgba(0, 0, 0, 0.8);
 	}
 
 	.hello {
