@@ -20,10 +20,19 @@
 	$: menuButtonDisabled = name.length === 0 || roomCode.length === 0 || serverAddress.length === 0;
 
 	// Gameplay related
+	let jobTextInput: HTMLInputElement;
+	let jobTextInputText: string = '';
+	let createdJobTexts: string[] = [];
 	let selectedJob: Card | null = null;
 	let salaryCents: number = 1;
 
 	function joinGame(): void {
+		// Reset gameplay related variables
+		createdJobTexts = [];
+		jobTextInputText = '';
+		selectedJob = null;
+		salaryCents = 1;
+
 		clientState = ClientState.CONNECTING;
 		jobberClient = new JobbersWebClient(serverAddress, roomCode, name);
 		jobberClient.onGameStateChanged = (oldGameState: ClientState, newGameState: ClientState) => {
@@ -46,9 +55,17 @@
 {:else if clientState == ClientState.LOBBY}
 	<Spinner message="Waiting for the game to begin" />
 {:else if clientState == ClientState.JOB_CREATION}
-	<JobForm
-		on:jobSubmited={(e) => {
-			jobberClient.createJob(e.detail.title);
+	<BigText text="Enter a Job Title" />
+	<JobForm bind:input={jobTextInput} bind:text={jobTextInputText} />
+	<StylizedButton
+		disabled={jobTextInputText.length === 0 ||
+			createdJobTexts.includes(jobTextInputText.toUpperCase())}
+		text="Submit"
+		on:click={() => {
+			jobTextInput.focus();
+			jobberClient.createJob(jobTextInputText);
+			createdJobTexts.push(jobTextInputText.toUpperCase());
+			jobTextInputText = '';
 		}}
 	/>
 {:else if clientState == ClientState.JOB_CREATION_DONE}
