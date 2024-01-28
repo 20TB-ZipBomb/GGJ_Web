@@ -3,7 +3,13 @@
 	export let input: HTMLElement;
 </script>
 
-<input type="text" placeholder="Lawyer, Pirate, etc." bind:value={text} bind:this={input} />
+<input
+	on:keydown
+	type="text"
+	placeholder="Lawyer, Pirate, etc."
+	bind:value={text}
+	bind:this={input}
+/>
 
 <style>
 	input {
