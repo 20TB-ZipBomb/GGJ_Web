@@ -252,7 +252,7 @@ export class JobbersWebClient {
 		if (this.gameState == ClientState.INTERVIEWER) {
 			this.gameState = ClientState.VOTING;
 		} else if (this.gameState == ClientState.INTERVIEWEE) {
-			this.gameState = ClientState.VOTING;
+			this.gameState = ClientState.VOTING_DONE;
 		}
 	};
 
