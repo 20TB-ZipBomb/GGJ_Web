@@ -222,7 +222,9 @@ export class JobbersWebClient {
 			this.gameState = ClientState.LOBBY;
 		} else if (
 			this.gameState == ClientState.JOB_PICKING ||
-			this.gameState == ClientState.JOB_PICKING_DONE
+			this.gameState == ClientState.JOB_PICKING_DONE ||
+			this.gameState == ClientState.VOTING ||
+			this.gameState == ClientState.VOTING_DONE
 		) {
 			if (this.playerId == message.player_id) {
 				this.gameState = ClientState.INTERVIEWEE;
