@@ -2,6 +2,7 @@
 	import BigText from '$lib/components/big-text.svelte';
 	import JobForm from '$lib/components/job-form.svelte';
 	import JobList from '$lib/components/job-list.svelte';
+	import Job from '$lib/components/job.svelte';
 	import MyNameIs from '$lib/components/my-name-is.svelte';
 	import SalarySlider from '$lib/components/salary-slider.svelte';
 	import Spinner from '$lib/components/spinner.svelte';
@@ -35,9 +36,9 @@
 </script>
 
 {#if clientState == ClientState.MENU}
-	<BigText text="Jobbers" />
+	<BigText text="Octopation" />
 	<MyNameIs bind:name bind:roomCode />
-	<h2>Server WebSocket Address</h2>
+	<h2 style="margin: 0">Server WebSocket Address</h2>
 	<input type="text" bind:value={serverAddress} />
 	<StylizedButton disabled={menuButtonDisabled} text="Join Game" on:click={joinGame} />
 {:else if clientState == ClientState.CONNECTING}
@@ -53,6 +54,9 @@
 {:else if clientState == ClientState.JOB_CREATION_DONE}
 	<Spinner message="Waiting for others to make jobs" />
 {:else if clientState == ClientState.JOB_PICKING}
+	<BigText text="Interviewing for" />
+	<Job title={jobberClient.jobCard.job_text} />
+	<BigText text="Choose your qualification" />
 	<JobList jobs={jobberClient.cards} bind:selectedJob />
 	<StylizedButton
 		text={selectedJob ? 'Pick a job' : 'Confirm'}
