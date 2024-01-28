@@ -72,6 +72,7 @@
 {:else if clientState == ClientState.INTERVIEWEE}
 	<BigText text="You are being interviewed" />
 {:else if clientState == ClientState.INTERVIEWER}
+	<BigText text="Send past experience" />
 	<JobList jobs={jobberClient.cards} bind:selectedJob />
 	<StylizedButton
 		text={selectedJob ? 'Select a job to send' : 'Send job'}
