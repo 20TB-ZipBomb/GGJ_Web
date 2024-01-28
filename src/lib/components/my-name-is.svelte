@@ -9,6 +9,7 @@
 </div>
 
 <style>
+
 	div {
 		background-color: red;
 		border-radius: 10px;
@@ -17,6 +18,7 @@
 	}
 
 	.hello {
+        font-family: 'Belgrano';
 		color: white;
 		width: 100%;
 		text-align: center;
@@ -25,6 +27,7 @@
 	}
 
 	.my-name-is {
+        font-family: 'Belgrano';
 		color: white;
 		width: 100%;
 		text-align: center;
