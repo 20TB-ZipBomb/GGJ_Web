@@ -298,7 +298,7 @@ export class JobbersWebClient {
 				console.error(`Cannot find card with id ${card_id}`);
 				return;
 			}
-			this.cards.filter((c) => c.card_id != card_id);
+			this.cards = this.cards.filter((c) => c.card_id != card_id);
 			this.websocket.send(
 				JSON.stringify({
 					message_type: MessageType.CARD_DATA,

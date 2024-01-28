@@ -25,6 +25,7 @@
 	let createdJobTexts: string[] = [];
 	let selectedJob: Card | null = null;
 	let salaryCents: number = 1;
+	let jobCards: Card[] = [];
 
 	function joinGame(): void {
 		// Reset gameplay related variables
@@ -32,11 +33,15 @@
 		jobTextInputText = '';
 		selectedJob = null;
 		salaryCents = 1;
+		jobCards = [];
 
 		clientState = ClientState.CONNECTING;
 		jobberClient = new JobbersWebClient(serverAddress, roomCode, name);
 		jobberClient.onGameStateChanged = (oldGameState: ClientState, newGameState: ClientState) => {
 			clientState = newGameState;
+			if (newGameState == ClientState.INTERVIEWER) {
+				jobCards = jobberClient.cards;
+			}
 		};
 		jobberClient.onError = () => {
 			clientState = ClientState.MENU;
@@ -89,17 +94,22 @@
 {:else if clientState == ClientState.INTERVIEWEE}
 	<BigText text="You are being interviewed" fontSize="4em" />
 {:else if clientState == ClientState.INTERVIEWER}
-	<BigText text="Send past experience" />
-	<JobList jobs={jobberClient.cards} bind:selectedJob />
+	{#if jobCards.length == 0}
+		<BigText text="You have no job experiences left to send!" fontSize="4em" />
+	{:else}
+		<BigText text="Send past experience" fontSize="4em" />
+		<JobList jobs={jobCards} bind:selectedJob />
 	<StylizedButton
-		text={selectedJob ? 'Send job' : 'Select a job to send'}
+			text={'Send Job Experience'}
 		disabled={selectedJob == null}
 		on:click={() => {
 			if (selectedJob == null) return;
 			jobberClient.sendCardData(selectedJob.card_id);
+				jobCards = jobCards.filter((card) => card.card_id != selectedJob?.card_id);
 			selectedJob = null;
 		}}
 	/>
+	{/if}
 {:else if clientState == ClientState.VOTING}
 	<BigText text="Award Salary" />
 	<SalarySlider bind:salaryCents />
