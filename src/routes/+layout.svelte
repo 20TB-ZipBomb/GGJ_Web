@@ -1,5 +1,6 @@
 <slot />
 
+<!-- he gets it -->
 <style>
 	@font-face {
 		font-family: 'Chomsky';
