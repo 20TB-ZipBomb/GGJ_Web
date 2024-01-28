@@ -90,7 +90,7 @@ export type ScoreSubmissionMessage = Message & {
 };
 
 export type Card = {
-	card_id: number;
+	card_id: string;
 	job_text: string;
 };
 
@@ -113,7 +113,7 @@ export class JobbersWebClient {
 	private _jobsToCreateRemaining: number = 0;
 	public cards: Card[] = [];
 	private jobCard: Card = {
-		card_id: -1,
+		card_id: '-1',
 		job_text: 'Unknown'
 	};
 
@@ -291,7 +291,7 @@ export class JobbersWebClient {
 		}
 	};
 
-	sendCardData = (card_id: number) => {
+	sendCardData = (card_id: string) => {
 		if (this.gameState == ClientState.JOB_PICKING || this.gameState == ClientState.INTERVIEWER) {
 			let card: Card | undefined = this.cards.find((c) => c.card_id == card_id);
 			if (card == undefined) {
