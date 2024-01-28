@@ -87,7 +87,7 @@
 {:else if clientState == ClientState.JOB_PICKING_DONE}
 	<Spinner message="Waiting for others to pick jobs" />
 {:else if clientState == ClientState.INTERVIEWEE}
-	<BigText text="You are being interviewed" />
+	<BigText text="You are being interviewed" fontSize="4em" />
 {:else if clientState == ClientState.INTERVIEWER}
 	<BigText text="Send past experience" />
 	<JobList jobs={jobberClient.cards} bind:selectedJob />
