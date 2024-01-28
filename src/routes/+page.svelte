@@ -117,7 +117,7 @@
 			disabled={selectedJob == null}
 			on:click={() => {
 				if (selectedJob == null) return;
-				jobberClient.sendCardData(selectedJob.card_id);
+				jobberClient.sendInterceptCardData(selectedJob.card_id);
 				jobCards = jobCards.filter((card) => card.card_id != selectedJob?.card_id);
 				selectedJob = null;
 			}}
