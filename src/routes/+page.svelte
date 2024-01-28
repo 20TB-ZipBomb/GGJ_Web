@@ -26,6 +26,7 @@
 	let selectedJob: Card | null = null;
 	let salaryCents: number = 1;
 	let jobCards: Card[] = [];
+	let jobsToMake: number = 0;
 
 	function joinGame(): void {
 		// Reset gameplay related variables
@@ -42,6 +43,9 @@
 			if (newGameState == ClientState.INTERVIEWER) {
 				jobCards = jobberClient.cards;
 			}
+		};
+		jobberClient.onGameStarted = (numJobsToMake: number) => {
+			jobsToMake = numJobsToMake;
 		};
 		jobberClient.onError = () => {
 			clientState = ClientState.MENU;
@@ -60,7 +64,8 @@
 {:else if clientState == ClientState.LOBBY}
 	<Spinner message="Waiting for the game to begin" />
 {:else if clientState == ClientState.JOB_CREATION}
-	<BigText text="Enter a Job Title" />
+	<BigText text="Create Job Titles" fontSize="4.5em" />
+	<BigText text="{createdJobTexts.length + 1} of {jobsToMake}" fontSize="3em" />
 	<JobForm bind:input={jobTextInput} bind:text={jobTextInputText} />
 	<StylizedButton
 		disabled={jobTextInputText.length === 0 ||
@@ -70,6 +75,7 @@
 			jobTextInput.focus();
 			jobberClient.createJob(jobTextInputText);
 			createdJobTexts.push(jobTextInputText.toUpperCase());
+			createdJobTexts = createdJobTexts; // Force reactivity
 			jobTextInputText = '';
 		}}
 	/>
