@@ -73,7 +73,18 @@
 	<FlexContainer>
 		<BigText text="Create Job Titles" fontSize="4.5em" />
 		<BigText text="{createdJobTexts.length + 1} of {jobsToMake}" fontSize="3em" />
-		<JobForm bind:input={jobTextInput} bind:text={jobTextInputText} />
+		<JobForm
+			bind:input={jobTextInput}
+			bind:text={jobTextInputText}
+			on:keydown={(event) => {
+				if (event.key === 'Enter') {
+					jobberClient.createJob(jobTextInputText);
+					createdJobTexts.push(jobTextInputText.toUpperCase());
+					createdJobTexts = createdJobTexts; // Force reactivity
+					jobTextInputText = '';
+				}
+			}}
+		/>
 		<StylizedButton
 			disabled={jobTextInputText.length === 0 ||
 				createdJobTexts.includes(jobTextInputText.toUpperCase())}
