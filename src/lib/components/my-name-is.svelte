@@ -9,8 +9,10 @@
 </div>
 
 <style>
-
 	div {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		background-color: red;
 		border-radius: 10px;
 		max-width: min(400px, 80%);
@@ -18,7 +20,7 @@
 	}
 
 	.hello {
-        font-family: 'Belgrano';
+		font-family: 'Belgrano';
 		color: white;
 		width: 100%;
 		text-align: center;
@@ -27,7 +29,7 @@
 	}
 
 	.my-name-is {
-        font-family: 'Belgrano';
+		font-family: 'Belgrano';
 		color: white;
 		width: 100%;
 		text-align: center;
@@ -39,7 +41,6 @@
 		width: calc(100% - 20px);
 		font-size: 2em;
 		border: none;
-		margin-left: 10px;
 		text-align: center;
 		margin-bottom: 10px;
 		margin-top: 10px;
