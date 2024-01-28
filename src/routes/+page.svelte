@@ -135,5 +135,5 @@
 {:else if clientState == ClientState.VOTING_DONE}
 	<Spinner message="Waiting for others to vote" />
 {:else if clientState == ClientState.GAME_FINISHED}
-	<BigText text="All round finished. Look up at the screen!" />
+	<BigText text="All rounds finished. Look up at the screen!" />
 {/if}
