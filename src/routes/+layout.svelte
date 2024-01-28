@@ -29,7 +29,7 @@
 		background-attachment: fixed;
 		/* darken background image */
 
-		animation: scrollBackground 10s linear infinite;
+		animation: scrollBackground 20s linear infinite;
 	}
 
 	:global(body) {
