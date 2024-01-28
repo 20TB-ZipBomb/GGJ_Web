@@ -8,6 +8,7 @@
 <style>
 	/* Remove built in button styling */
 	button {
+		font-family: 'Belgrano';
 		background: white;
 		width: min(400px, 80%);
 		border: none;
