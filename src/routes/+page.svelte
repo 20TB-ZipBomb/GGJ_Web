@@ -2,7 +2,6 @@
 	import BigText from '$lib/components/big-text.svelte';
 	import JobForm from '$lib/components/job-form.svelte';
 	import JobList from '$lib/components/job-list.svelte';
-	import Job from '$lib/components/job.svelte';
 	import MyNameIs from '$lib/components/my-name-is.svelte';
 	import SalarySlider from '$lib/components/salary-slider.svelte';
 	import Spinner from '$lib/components/spinner.svelte';
