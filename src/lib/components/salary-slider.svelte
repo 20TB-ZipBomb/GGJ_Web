@@ -26,8 +26,9 @@
 <div class="slider-container">
 	<input bind:value={salaryCents} type="range" min="1" max={MAX_SALARY} orient="vertical" />
 	<h2
-		style="bottom: calc({salaryPercent * 100}% - {20 *
-			salaryPercent}px + 10px); font-size: calc(26px + {salaryPercent * 16}px);"
+		style="bottom: calc({salaryPercent * 100}% - {20 * salaryPercent}px + 10px); 
+        font-size: calc(26px + {salaryPercent * 16}px);
+        color: rgb(0, {salaryPercent * 255}, 0);"
 		class="salary-label"
 	>
 		{numberFormatter.format($springySalaryCents / 100)}
@@ -35,13 +36,6 @@
 </div>
 
 <style>
-	h1 {
-		font-family: 'Belgrano';
-		font-size: 40px;
-		text-align: center;
-		width: min(100%, 400px);
-	}
-
 	.slider-container {
 		position: relative;
 		height: 40%;
@@ -57,6 +51,7 @@
 		text-align: left;
 		line-height: 0px;
 		margin: 0;
+		text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7);
 	}
 
 	input {
