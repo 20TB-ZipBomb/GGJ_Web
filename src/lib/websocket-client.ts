@@ -168,6 +168,7 @@ export class JobbersWebClient {
 		let message: Message;
 		try {
 			message = JSON.parse(event.data);
+			console.log(message);
 		} catch (error) {
 			console.error(`Error parsing message from server: ${error}`);
 			return;
