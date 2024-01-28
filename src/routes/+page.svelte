@@ -7,7 +7,6 @@
 	import Spinner from '$lib/components/spinner.svelte';
 	import StylizedButton from '$lib/components/stylized-button.svelte';
 	import { ClientState, JobbersWebClient, type Card } from '$lib/websocket-client';
-	import { onMount } from 'svelte';
 
 	let jobberClient: JobbersWebClient;
 	let clientState: ClientState = ClientState.MENU;
@@ -33,10 +32,6 @@
 			clientState = ClientState.MENU;
 		};
 	}
-
-	onMount(() => {
-		console.log('mounted');
-	});
 </script>
 
 {#if clientState == ClientState.MENU}
@@ -73,7 +68,7 @@
 {:else if clientState == ClientState.JOB_PICKING_DONE}
 	<Spinner message="Waiting for others to pick jobs" />
 {:else if clientState == ClientState.INTERVIEWEE}
-	<BigText text="You are presenting!" />
+	<BigText text="You are being interviewed" />
 {:else if clientState == ClientState.INTERVIEWER}
 	<JobList jobs={jobberClient.cards} bind:selectedJob />
 	<StylizedButton
