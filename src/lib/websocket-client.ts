@@ -112,7 +112,7 @@ export class JobbersWebClient {
 	private _gameState: ClientState = ClientState.CONNECTING;
 	private _jobsToCreateRemaining: number = 0;
 	public cards: Card[] = [];
-	private jobCard: Card = {
+	public jobCard: Card = {
 		card_id: '-1',
 		job_text: 'Unknown'
 	};
@@ -133,7 +133,6 @@ export class JobbersWebClient {
 	onGameJoinAttempFailed: (reason: string) => void = () => {};
 	onGameEnded: () => void = () => {};
 	onGameStateChanged: (oldGameState: ClientState, newGameState: ClientState) => void = () => {};
-	onJobCardChanged: (jobCard: Card) => void = () => {};
 	onCardsChanged: (cards: Card[]) => void = () => {};
 	onError: () => void = () => {};
 
@@ -246,7 +245,6 @@ export class JobbersWebClient {
 		}
 		this.cards = message.drawn_cards;
 		this.jobCard = message.job_card;
-		this.onJobCardChanged(this.jobCard);
 		this.gameState = ClientState.JOB_PICKING;
 	};
 
