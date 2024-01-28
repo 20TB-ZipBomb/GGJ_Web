@@ -1,31 +1,9 @@
 <script lang="ts">
-	import StylizedButton from './stylized-button.svelte';
-	import BigText from './big-text.svelte';
-	import { createEventDispatcher } from 'svelte';
-
-	let text = '';
-	let input: HTMLElement;
-
-	const dispatch = createEventDispatcher();
-	function submitJobTitle() {
-		dispatch('jobSubmited', {
-			title: text
-		});
-	}
+	export let text = '';
+	export let input: HTMLElement;
 </script>
 
-<BigText text="Enter a Job Title" />
-
 <input type="text" placeholder="Lawyer, Pirate, etc." bind:value={text} bind:this={input} />
-<StylizedButton
-	disabled={text.length === 0}
-	text="Submit"
-	on:click={() => {
-		submitJobTitle();
-		text = '';
-		input.focus();
-	}}
-/>
 
 <style>
 	input {
