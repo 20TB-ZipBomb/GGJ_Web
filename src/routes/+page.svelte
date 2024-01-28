@@ -92,7 +92,7 @@
 	<BigText text="Send past experience" />
 	<JobList jobs={jobberClient.cards} bind:selectedJob />
 	<StylizedButton
-		text={selectedJob ? 'Select a job to send' : 'Send job'}
+		text={selectedJob ? 'Send job' : 'Select a job to send'}
 		disabled={selectedJob == null}
 		on:click={() => {
 			if (selectedJob == null) return;
