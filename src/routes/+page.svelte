@@ -36,9 +36,7 @@
 
 {#if clientState == ClientState.MENU}
 	<BigText text="Jobbers" />
-	<MyNameIs bind:name />
-	<h2>Room Code</h2>
-	<input type="text" bind:value={roomCode} />
+	<MyNameIs bind:name bind:roomCode />
 	<h2>Server WebSocket Address</h2>
 	<input type="text" bind:value={serverAddress} />
 	<StylizedButton disabled={menuButtonDisabled} text="Join Game" on:click={joinGame} />
