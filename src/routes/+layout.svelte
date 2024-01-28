@@ -22,7 +22,7 @@
 	}
 
 	:global(html) {
-		background: #0e1321;
+		background: white;
 		margin: 0;
 		background-image: url('/classifieds-seamless-blur.png');
 		background-repeat: repeat;
