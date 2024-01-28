@@ -1,27 +1,20 @@
 <script>
 	import { SyncLoader } from 'svelte-loading-spinners';
+	import BigText from './big-text.svelte';
 
 	export let message = 'Waiting';
 </script>
 
 <div class="waiting-container">
-	<h1>{message}</h1>
-	<div class="spinner-wrapper"><SyncLoader /></div>
+	<BigText text={message} />
+	<SyncLoader />
 </div>
 
 <style>
 	.waiting-container {
+		width: 100%;
 		display: flex;
-	}
-
-	h1 {
-		display: inline;
-		align-self: end;
-		font-size: 4em;
-	}
-	.spinner-wrapper {
-		display: inline;
-		align-self: end;
-		padding-bottom: 2.5em;
+		flex-direction: column;
+		align-items: center;
 	}
 </style>
