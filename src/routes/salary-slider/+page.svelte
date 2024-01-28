@@ -7,12 +7,12 @@
 	let salaryCents = 1;
 </script>
 
-<h1>Based their experience, award {userToJudge} a salary for a {jobTitle}</h1>
 <SalarySlider bind:salaryCents />
 <StylizedButton text="Confirm" />
 
 <style>
 	h1 {
+		font-family: 'Belgrano';
 		text-align: center;
 	}
 </style>
