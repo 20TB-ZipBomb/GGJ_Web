@@ -6,6 +6,11 @@
 		src: url('/chomsky.regular.otf') format('opentype');
 	}
 
+	@font-face {
+		font-family: 'Belgrano';
+		src: url('/Belgrano-Regular.ttf') format('truetype');
+	}
+
 	@keyframes scrollBackground {
 		from {
 			background-position: 0 0;
