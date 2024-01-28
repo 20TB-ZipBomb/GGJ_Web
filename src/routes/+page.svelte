@@ -109,7 +109,7 @@
 	<BigText text="You are being interviewed" fontSize="4em" />
 {:else if clientState == ClientState.INTERVIEWER}
 	{#if jobCards.length == 0}
-		<BigText text="You have no job experiences left to send!" fontSize="4em" />
+		<BigText text="You have no job titles left to send!" fontSize="4em" />
 	{:else}
 		<BigText text="Send past experience" fontSize="4em" />
 		<JobList jobs={jobCards} bind:selectedJob />
