@@ -8,6 +8,7 @@
 	import Spinner from '$lib/components/spinner.svelte';
 	import StylizedButton from '$lib/components/stylized-button.svelte';
 	import { ClientState, JobbersWebClient, type Card } from '$lib/websocket-client';
+	import { onMount } from 'svelte';
 
 	let jobberClient: JobbersWebClient;
 	let clientState: ClientState = ClientState.MENU;
@@ -36,6 +37,7 @@
 		salaryCents = 1;
 		jobCards = [];
 
+		localStorage.setItem('name', name);
 		clientState = ClientState.CONNECTING;
 		jobberClient = new JobbersWebClient(serverAddress, roomCode, name);
 		jobberClient.onGameStateChanged = (oldGameState: ClientState, newGameState: ClientState) => {
@@ -51,6 +53,10 @@
 			clientState = ClientState.MENU;
 		};
 	}
+
+	onMount(() => {
+		name = localStorage.getItem('name') || '';
+	});
 </script>
 
 {#if clientState == ClientState.MENU}
