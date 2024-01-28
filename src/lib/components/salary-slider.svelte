@@ -1,5 +1,19 @@
-<script>
-	export let salaryCents = 1;
+<script lang="ts">
+	import { spring } from 'svelte/motion';
+	import BigText from './big-text.svelte';
+	export let salaryCents: number = 1;
+	const MAX_SALARY = 10000000;
+
+	// create a springy number formatter
+	let springySalaryCents = spring(salaryCents, {
+		stiffness: 0.3,
+		damping: 1
+	});
+
+	$: springySalaryCents.set(salaryCents);
+
+	let salaryPercent: number = 0;
+	$: salaryPercent = salaryCents / MAX_SALARY;
 
 	const numberFormatter = new Intl.NumberFormat('en-US', {
 		style: 'currency',
@@ -8,40 +22,51 @@
 	});
 </script>
 
+<BigText text="Salary" />
 <div class="slider-container">
-	<div class="input-container">
-		<input bind:value={salaryCents} type="range" min="1" max="100000" orient="vertical" />
-	</div>
-	<h1 class="salary-label">{numberFormatter.format(salaryCents / 100)}</h1>
+	<input bind:value={salaryCents} type="range" min="1" max={MAX_SALARY} orient="vertical" />
+	<h2
+		style="bottom: calc({salaryPercent * 100}% - {20 *
+			salaryPercent}px + 10px); font-size: calc(26px + {salaryPercent * 16}px);"
+		class="salary-label"
+	>
+		{numberFormatter.format($springySalaryCents / 100)}
+	</h2>
 </div>
 
 <style>
+	h1 {
+		font-family: 'Belgrano';
+		font-size: 40px;
+		text-align: center;
+		width: min(100%, 400px);
+	}
+
 	.slider-container {
+		position: relative;
 		height: 40%;
-		width: 80%;
+		width: min(90%, 400px);
 		display: flex;
 		align-items: center;
 	}
 
 	.salary-label {
-		text-align: center;
-		font-size: 50pt;
-		display: inline;
-		margin: auto;
+		font-family: 'Belgrano';
+		position: absolute;
+		left: 35px;
+		text-align: left;
+		line-height: 0px;
+		margin: 0;
 	}
 
 	input {
+		position: absolute;
+		top: 0px;
 		height: 100%;
 		left: 10px;
 		display: inline;
 		margin: auto;
 		appearance: slider-vertical;
-		display: inline;
-	}
-
-	.input-container {
-		width: 20%;
-		height: 100%;
 		display: inline;
 	}
 </style>
