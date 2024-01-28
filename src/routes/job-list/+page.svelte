@@ -23,6 +23,10 @@
 		{
 			card_id: '5',
 			job_text: 'Software Engineer'
+		},
+		{
+			card_id: '6',
+			job_text: 'Doctor that secretly steals kidneys to sell on the black market'
 		}
 	];
 
