@@ -2,8 +2,6 @@
 	import SalarySlider from '$lib/components/salary-slider.svelte';
 	import StylizedButton from '$lib/components/stylized-button.svelte';
 
-	let userToJudge = 'Dan';
-	let jobTitle = 'Plumber';
 	let salaryCents = 1;
 </script>
 
