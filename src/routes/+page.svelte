@@ -36,7 +36,7 @@
 </script>
 
 {#if clientState == ClientState.MENU}
-	<BigText text="Octopation" />
+	<BigText text="Octopations" fontSize="4em" />
 	<MyNameIs bind:name bind:roomCode />
 	<h2 style="margin: 0">Server WebSocket Address</h2>
 	<input type="text" bind:value={serverAddress} />
