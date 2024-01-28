@@ -1,11 +1,19 @@
 <script lang="ts">
 	export let name: String = '';
+	export let roomCode: String = '';
 </script>
 
 <div>
 	<p class="hello">HELLO</p>
 	<p class="my-name-is">my name is</p>
-	<input type="text" placeholder="Your name here" bind:value={name} />
+	<input type="text" placeholder="Your name" bind:value={name} />
+	<p class="my-name-is">interviewing at</p>
+	<input
+		type="text"
+		style="text-transform: uppercase;"
+		placeholder="Room code"
+		bind:value={roomCode}
+	/>
 </div>
 
 <style>
@@ -51,5 +59,6 @@
 		height: 100px;
 		font-weight: bold;
 		border-radius: 4px;
+		text-transform: uppercase;
 	}
 </style>
