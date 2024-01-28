@@ -7,10 +7,3 @@
 
 <SalarySlider bind:salaryCents />
 <StylizedButton text="Confirm" />
-
-<style>
-	h1 {
-		font-family: 'Belgrano';
-		text-align: center;
-	}
-</style>
