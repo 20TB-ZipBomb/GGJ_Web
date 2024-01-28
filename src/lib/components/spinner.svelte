@@ -6,7 +6,7 @@
 </script>
 
 <div class="waiting-container">
-	<BigText text={message} />
+	<BigText text={message} fontSize="4em" />
 	<SyncLoader />
 </div>
 
