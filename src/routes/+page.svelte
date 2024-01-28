@@ -71,9 +71,9 @@
 {:else if clientState == ClientState.JOB_CREATION_DONE}
 	<Spinner message="Waiting for others to make jobs" />
 {:else if clientState == ClientState.JOB_PICKING}
-	<BigText text="Interviewing for" />
+	<BigText text="Interviewing for" fontSize="3em" />
 	<Job title={jobberClient.jobCard.job_text} />
-	<BigText text="Choose your qualification" />
+	<BigText text="Choose your qualification" fontSize="3em" />
 	<JobList jobs={jobberClient.cards} bind:selectedJob />
 	<StylizedButton
 		text={selectedJob ? 'Pick a job' : 'Confirm'}
