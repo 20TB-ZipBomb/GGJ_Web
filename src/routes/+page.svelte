@@ -77,7 +77,15 @@
 	<Spinner message="Waiting for others to make jobs" />
 {:else if clientState == ClientState.JOB_PICKING}
 	<BigText text="Interviewing for" fontSize="3em" />
-	<Job title={jobberClient.jobCard.job_text} />
+	<h2
+		style="
+        font-family: 'Belgrano';
+        font-size: 3em;
+        margin: 0;
+    "
+	>
+		{jobberClient.jobCard.job_text}
+	</h2>
 	<BigText text="Choose your qualification" fontSize="3em" />
 	<JobList jobs={jobberClient.cards} bind:selectedJob />
 	<StylizedButton
@@ -99,16 +107,16 @@
 	{:else}
 		<BigText text="Send past experience" fontSize="4em" />
 		<JobList jobs={jobCards} bind:selectedJob />
-	<StylizedButton
+		<StylizedButton
 			text={'Send Job Experience'}
-		disabled={selectedJob == null}
-		on:click={() => {
-			if (selectedJob == null) return;
-			jobberClient.sendCardData(selectedJob.card_id);
+			disabled={selectedJob == null}
+			on:click={() => {
+				if (selectedJob == null) return;
+				jobberClient.sendCardData(selectedJob.card_id);
 				jobCards = jobCards.filter((card) => card.card_id != selectedJob?.card_id);
-			selectedJob = null;
-		}}
-	/>
+				selectedJob = null;
+			}}
+		/>
 	{/if}
 {:else if clientState == ClientState.VOTING}
 	<BigText text="Award Salary" />
