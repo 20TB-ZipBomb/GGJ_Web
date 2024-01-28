@@ -34,7 +34,11 @@ export enum MessageType {
 	/**
 	 * Client -> Server
 	 */
-	SCORE_SUBMISSION = 'score_submission'
+	SCORE_SUBMISSION = 'score_submission',
+	/**
+	 * Client -> Server
+	 */
+	GAME_FINISHED = 'game_finished'
 }
 
 /**
@@ -89,6 +93,10 @@ export type ScoreSubmissionMessage = Message & {
 	score_in_cents: number;
 };
 
+export type GameFinishedMessage = Message & {
+	message_type: MessageType.GAME_FINISHED;
+}
+
 export type Card = {
 	card_id: string;
 	job_text: string;
@@ -105,7 +113,8 @@ export enum ClientState {
 	INTERVIEWER,
 	VOTING,
 	VOTING_DONE,
-	INTERVIEWEE
+	INTERVIEWEE,
+	GAME_FINISHED
 }
 
 export class JobbersWebClient {
@@ -195,6 +204,8 @@ export class JobbersWebClient {
 			case MessageType.TIMER_FINISHED:
 				this.onTimerFinishedMessage(message as TimerFinishedMessage);
 				break;
+			case MessageType.GAME_FINISHED:
+				this.onGameFinishedMessage(message as GameFinishedMessage);
 			default:
 				console.error('Unknown message type received: ' + message.message_type);
 				break;
@@ -257,6 +268,12 @@ export class JobbersWebClient {
 			this.gameState = ClientState.VOTING_DONE;
 		}
 	};
+
+	onGameFinishedMessage = (message: GameFinishedMessage) => {
+		if (this.gameState == ClientState.VOTING_DONE) {
+			this.gameState = ClientState.GAME_FINISHED;
+		}
+	}
 
 	sendLobbyJoinAttempt = (name: string, lobbyCode: string) => {
 		if (this.gameState != ClientState.CONNECTING) {
