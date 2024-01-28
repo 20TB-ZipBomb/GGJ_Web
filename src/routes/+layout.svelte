@@ -27,8 +27,6 @@
 		background-image: url('/classifieds-seamless-blur.png');
 		background-repeat: repeat;
 		background-attachment: fixed;
-		/* darken background image */
-
 		animation: scrollBackground 20s linear infinite;
 	}
 
