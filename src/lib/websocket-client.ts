@@ -28,6 +28,10 @@ export enum MessageType {
 	 */
 	CARD_DATA = 'card_data',
 	/**
+	 * Client -> Server
+	 */
+	INTERCEPT_CARD_DATA = 'intercept_card_data',
+	/**
 	 * Server -> Client
 	 */
 	TIMER_FINISHED = 'timer_finished',
@@ -84,6 +88,11 @@ export type CardDataMessage = Message & {
 	card: Card;
 };
 
+export type InterceptCardDataMessage = Message & {
+	message_type: MessageType.INTERCEPT_CARD_DATA;
+	card: Card;
+};
+
 export type TimerFinishedMessage = Message & {
 	message_type: MessageType.TIMER_FINISHED;
 };
@@ -95,7 +104,7 @@ export type ScoreSubmissionMessage = Message & {
 
 export type GameFinishedMessage = Message & {
 	message_type: MessageType.GAME_FINISHED;
-}
+};
 
 export type Card = {
 	card_id: string;
@@ -273,7 +282,7 @@ export class JobbersWebClient {
 		if (this.gameState == ClientState.VOTING_DONE) {
 			this.gameState = ClientState.GAME_FINISHED;
 		}
-	}
+	};
 
 	sendLobbyJoinAttempt = (name: string, lobbyCode: string) => {
 		if (this.gameState != ClientState.CONNECTING) {
@@ -311,7 +320,7 @@ export class JobbersWebClient {
 	};
 
 	sendCardData = (card_id: string) => {
-		if (this.gameState == ClientState.JOB_PICKING || this.gameState == ClientState.INTERVIEWER) {
+		if (this.gameState == ClientState.JOB_PICKING) {
 			let card: Card | undefined = this.cards.find((c) => c.card_id == card_id);
 			if (card == undefined) {
 				console.error(`Cannot find card with id ${card_id}`);
@@ -325,12 +334,30 @@ export class JobbersWebClient {
 				} as CardDataMessage)
 			);
 			this.onCardsChanged(this.cards);
-			if (this.gameState == ClientState.JOB_PICKING) {
-				this.gameState = ClientState.JOB_PICKING_DONE;
-			}
+			this.gameState = ClientState.JOB_PICKING_DONE;
 		} else {
 			console.error(`Cannot send card data when in state ${this.gameState}`);
 		}
+	};
+
+	sendInterceptCardData = (card_id: string) => {
+		if (this.gameState != ClientState.INTERVIEWER) {
+			console.error(`Cannot send intercept card data when not in interviewer state`);
+			return;
+		}
+		let card: Card | undefined = this.cards.find((c) => c.card_id == card_id);
+		if (card == undefined) {
+			console.error(`Cannot find card with id ${card_id}`);
+			return;
+		}
+		this.cards = this.cards.filter((c) => c.card_id != card_id);
+		this.websocket.send(
+			JSON.stringify({
+				message_type: MessageType.INTERCEPT_CARD_DATA,
+				card: card
+			} as InterceptCardDataMessage)
+		);
+		this.onCardsChanged(this.cards);
 	};
 
 	sendScoreSubmission = (salaryCents: number) => {
