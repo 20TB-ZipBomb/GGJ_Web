@@ -28,6 +28,7 @@
 		text-align: center;
 		font-size: 4em;
 		margin: 0;
+		user-select: none;
 	}
 
 	.my-name-is {
@@ -37,6 +38,7 @@
 		text-align: center;
 		font-size: 2em;
 		margin: 0;
+		user-select: none;
 	}
 
 	input {
