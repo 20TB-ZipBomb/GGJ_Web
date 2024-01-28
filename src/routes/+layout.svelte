@@ -23,7 +23,7 @@
 	:global(html) {
 		background: #0e1321;
 		margin: 0;
-		background-image: url('classifieds-seamless-blur.png');
+		background-image: url('/classifieds-seamless-blur.png');
 		background-repeat: repeat;
 		background-attachment: fixed;
 		/* darken background image */
