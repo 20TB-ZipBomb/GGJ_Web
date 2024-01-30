@@ -48,61 +48,70 @@ export enum MessageType {
 /**
  * A message sent between the client and server.
  */
-export type Message = {
-	message_type: MessageType;
-};
+export type Message =
+	| ConnectionRejectedMessage
+	| LobbyJoinAttemptMessage
+	| GameStartMessage
+	| JobSubmittedMessage
+	| PlayerIdMessage
+	| ReceivedCardsMessage
+	| CardDataMessage
+	| InterceptCardDataMessage
+	| TimerFinishedMessage
+	| ScoreSubmissionMessage
+	| GameFinishedMessage;
 
-export type ConnectionRejectedMessage = Message & {
+export type ConnectionRejectedMessage = {
 	message_type: MessageType.CONNECTION_REJECTED;
 };
 
-export type LobbyJoinAttemptMessage = Message & {
+export type LobbyJoinAttemptMessage = {
 	message_type: MessageType.LOBBY_JOIN_ATTEMPT;
 	name: string;
 	lobby_code: string;
 };
 
-export type GameStartMessage = Message & {
+export type GameStartMessage = {
 	message_type: MessageType.GAME_START;
 	number_of_jobs: number;
 };
 
-export type JobSubmittedMessage = Message & {
+export type JobSubmittedMessage = {
 	message_type: MessageType.JOB_SUBMITTED;
 	job_input: string;
 };
 
-export type PlayerIdMessage = Message & {
+export type PlayerIdMessage = {
 	message_type: MessageType.PLAYER_ID;
 	player_id: string;
 };
 
-export type ReceivedCardsMessage = Message & {
+export type ReceivedCardsMessage = {
 	message_type: MessageType.RECEIVED_CARDS;
 	drawn_cards: Card[];
 	job_card: Card;
 };
 
-export type CardDataMessage = Message & {
+export type CardDataMessage = {
 	message_type: MessageType.CARD_DATA;
 	card: Card;
 };
 
-export type InterceptCardDataMessage = Message & {
+export type InterceptCardDataMessage = {
 	message_type: MessageType.INTERCEPT_CARD_DATA;
 	card: Card;
 };
 
-export type TimerFinishedMessage = Message & {
+export type TimerFinishedMessage = {
 	message_type: MessageType.TIMER_FINISHED;
 };
 
-export type ScoreSubmissionMessage = Message & {
+export type ScoreSubmissionMessage = {
 	message_type: MessageType.SCORE_SUBMISSION;
 	score_in_cents: number;
 };
 
-export type GameFinishedMessage = Message & {
+export type GameFinishedMessage = {
 	message_type: MessageType.GAME_FINISHED;
 };
 
