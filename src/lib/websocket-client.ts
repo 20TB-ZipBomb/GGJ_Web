@@ -149,7 +149,7 @@ export class JobbersWebClient {
 	}
 
 	private set clientState(value: ClientState) {
-		this.onGameStateChanged(this._clientState, value);
+		this.onGameStateChanged(value);
 		this._clientState = value;
 	}
 
@@ -159,11 +159,11 @@ export class JobbersWebClient {
 
 	private websocket: WebSocket;
 
-	onGameJoinAttempFailed: (reason: string) => void = () => {};
-	onGameStarted: (jobsToMake: number) => void = () => {};
-	onGameStateChanged: (oldGameState: ClientState, newGameState: ClientState) => void = () => {};
-	onCardsChanged: (cards: Card[]) => void = () => {};
-	onError: () => void = () => {};
+	public onGameJoinAttempFailed: (reason: string) => void = () => {};
+	public onGameStarted: (jobsToMake: number) => void = () => {};
+	public onGameStateChanged: (newGameState: ClientState) => void = () => {};
+	public onCardsChanged: (cards: Card[]) => void = () => {};
+	public onError: () => void = () => {};
 
 	private stateHandlers: Map<ClientState, (message: Message) => void> = new Map()
 		.set(ClientState.CONNECTING, (message: Message) => {
@@ -231,22 +231,22 @@ export class JobbersWebClient {
 		this.websocket.onmessage = this.onMessage;
 	}
 
-	onOpen = (event: Event) => {
+	private onOpen = (event: Event) => {
 		console.log('Websocket opened');
 		this.sendLobbyJoinAttempt(this.playerName, this.roomCode);
 	};
 
-	onClose = (event: CloseEvent) => {
+	private onClose = (event: CloseEvent) => {
 		console.log('Websocket closed');
 	};
 
-	onWSError = (event: Event) => {
+	private onWSError = (event: Event) => {
 		console.error(`Websocket error`);
 		console.error(event);
 		this.onError();
 	};
 
-	onMessage = (event: MessageEvent) => {
+	private onMessage = (event: MessageEvent) => {
 		let message: Message;
 		try {
 			message = JSON.parse(event.data);
@@ -268,7 +268,7 @@ export class JobbersWebClient {
 		}
 	};
 
-	sendLobbyJoinAttempt = (name: string, lobbyCode: string) => {
+	public sendLobbyJoinAttempt = (name: string, lobbyCode: string) => {
 		if (this.clientState != ClientState.CONNECTING) {
 			console.error('Cannot join lobby when not in connecting state');
 			return;
@@ -282,7 +282,7 @@ export class JobbersWebClient {
 		);
 	};
 
-	createJob = (jobText: string) => {
+	public createJob = (jobText: string) => {
 		if (this.clientState != ClientState.JOB_CREATION) {
 			console.error('Cannot create job when not in job creation state');
 			return;
@@ -303,7 +303,7 @@ export class JobbersWebClient {
 		}
 	};
 
-	sendCardData = (card_id: string) => {
+	public sendCardData = (card_id: string) => {
 		if (this.clientState == ClientState.JOB_PICKING) {
 			let card: Card | undefined = this.cards.find((c) => c.card_id == card_id);
 			if (card == undefined) {
@@ -324,7 +324,7 @@ export class JobbersWebClient {
 		}
 	};
 
-	sendInterceptCardData = (card_id: string) => {
+	public sendInterceptCardData = (card_id: string) => {
 		if (this.clientState != ClientState.INTERVIEWER) {
 			console.error(`Cannot send intercept card data when not in interviewer state`);
 			return;
@@ -344,7 +344,7 @@ export class JobbersWebClient {
 		this.onCardsChanged(this.cards);
 	};
 
-	sendScoreSubmission = (salaryCents: number) => {
+	public sendScoreSubmission = (salaryCents: number) => {
 		if (this.clientState != ClientState.VOTING) {
 			console.error(`Cannot submit score when not in voting state`);
 			return;

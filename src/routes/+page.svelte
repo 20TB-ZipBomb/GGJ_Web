@@ -40,7 +40,7 @@
 		localStorage.setItem('name', name);
 		clientState = ClientState.CONNECTING;
 		jobberClient = new JobbersWebClient(serverAddress, roomCode, name);
-		jobberClient.onGameStateChanged = (oldGameState: ClientState, newGameState: ClientState) => {
+		jobberClient.onGameStateChanged = (newGameState: ClientState) => {
 			clientState = newGameState;
 			if (newGameState == ClientState.INTERVIEWER) {
 				jobCards = jobberClient.cards;
