@@ -136,7 +136,7 @@ export enum ClientState {
 }
 
 export class JobbersWebClient {
-	private _gameState: ClientState = ClientState.CONNECTING;
+	private _clientState: ClientState = ClientState.CONNECTING;
 	private _jobsToCreateRemaining: number = 0;
 	public cards: Card[] = [];
 	public jobCard: Card = {
@@ -144,13 +144,13 @@ export class JobbersWebClient {
 		job_text: 'Unknown'
 	};
 
-	private get gameState() {
-		return this._gameState;
+	private get clientState() {
+		return this._clientState;
 	}
 
-	private set gameState(value: ClientState) {
-		this.onGameStateChanged(this._gameState, value);
-		this._gameState = value;
+	private set clientState(value: ClientState) {
+		this.onGameStateChanged(this._clientState, value);
+		this._clientState = value;
 	}
 
 	private roomCode: string = '';
@@ -170,54 +170,54 @@ export class JobbersWebClient {
 			if (message.message_type == MessageType.CONNECTION_REJECTED) {
 				this.websocket.close();
 				this.onGameJoinAttempFailed('No game found with that code');
-				this.gameState = ClientState.MENU;
+				this.clientState = ClientState.MENU;
 			} else if (message.message_type == MessageType.PLAYER_ID) {
 				this.playerId = message.player_id;
-				this.gameState = ClientState.LOBBY;
+				this.clientState = ClientState.LOBBY;
 			}
 		})
 		.set(ClientState.LOBBY, (message: Message) => {
 			if (message.message_type == MessageType.GAME_START) {
 				this._jobsToCreateRemaining = message.number_of_jobs;
 				this.onGameStarted(message.number_of_jobs);
-				this.gameState = ClientState.JOB_CREATION;
+				this.clientState = ClientState.JOB_CREATION;
 			}
 		})
 		.set(ClientState.JOB_CREATION_DONE, (message: Message) => {
 			if (message.message_type == MessageType.RECEIVED_CARDS) {
 				this.cards = message.drawn_cards;
 				this.jobCard = message.job_card;
-				this.gameState = ClientState.JOB_PICKING;
+				this.clientState = ClientState.JOB_PICKING;
 			}
 		})
 		.set(ClientState.JOB_PICKING_DONE, (message: Message) => {
 			if (message.message_type == MessageType.PLAYER_ID) {
 				if (this.playerId == message.player_id) {
-					this.gameState = ClientState.INTERVIEWEE;
+					this.clientState = ClientState.INTERVIEWEE;
 				} else {
-					this.gameState = ClientState.INTERVIEWER;
+					this.clientState = ClientState.INTERVIEWER;
 				}
 			}
 		})
 		.set(ClientState.INTERVIEWER, (message: Message) => {
 			if (message.message_type == MessageType.TIMER_FINISHED) {
-				this.gameState = ClientState.VOTING;
+				this.clientState = ClientState.VOTING;
 			}
 		})
 		.set(ClientState.INTERVIEWEE, (message: Message) => {
 			if (message.message_type == MessageType.TIMER_FINISHED) {
-				this.gameState = ClientState.VOTING_DONE;
+				this.clientState = ClientState.VOTING_DONE;
 			}
 		})
 		.set(ClientState.VOTING_DONE, (message: Message) => {
 			if (message.message_type == MessageType.PLAYER_ID) {
 				if (this.playerId == message.player_id) {
-					this.gameState = ClientState.INTERVIEWEE;
+					this.clientState = ClientState.INTERVIEWEE;
 				} else {
-					this.gameState = ClientState.INTERVIEWER;
+					this.clientState = ClientState.INTERVIEWER;
 				}
 			} else if (message.message_type == MessageType.GAME_FINISHED) {
-				this.gameState = ClientState.GAME_FINISHED;
+				this.clientState = ClientState.GAME_FINISHED;
 			}
 		});
 
@@ -261,15 +261,15 @@ export class JobbersWebClient {
 			return;
 		}
 
-		if (this.stateHandlers.has(this.gameState)) {
-			this.stateHandlers.get(this.gameState)!(message);
+		if (this.stateHandlers.has(this.clientState)) {
+			this.stateHandlers.get(this.clientState)!(message);
 		} else {
-			console.error(`No handler for state ${this.gameState}`);
+			console.error(`No handler for state ${this.clientState}`);
 		}
 	};
 
 	sendLobbyJoinAttempt = (name: string, lobbyCode: string) => {
-		if (this.gameState != ClientState.CONNECTING) {
+		if (this.clientState != ClientState.CONNECTING) {
 			console.error('Cannot join lobby when not in connecting state');
 			return;
 		}
@@ -283,7 +283,7 @@ export class JobbersWebClient {
 	};
 
 	createJob = (jobText: string) => {
-		if (this.gameState != ClientState.JOB_CREATION) {
+		if (this.clientState != ClientState.JOB_CREATION) {
 			console.error('Cannot create job when not in job creation state');
 			return;
 		}
@@ -299,12 +299,12 @@ export class JobbersWebClient {
 			} as JobSubmittedMessage)
 		);
 		if (this._jobsToCreateRemaining == 0) {
-			this.gameState = ClientState.JOB_CREATION_DONE;
+			this.clientState = ClientState.JOB_CREATION_DONE;
 		}
 	};
 
 	sendCardData = (card_id: string) => {
-		if (this.gameState == ClientState.JOB_PICKING) {
+		if (this.clientState == ClientState.JOB_PICKING) {
 			let card: Card | undefined = this.cards.find((c) => c.card_id == card_id);
 			if (card == undefined) {
 				console.error(`Cannot find card with id ${card_id}`);
@@ -318,14 +318,14 @@ export class JobbersWebClient {
 				} as CardDataMessage)
 			);
 			this.onCardsChanged(this.cards);
-			this.gameState = ClientState.JOB_PICKING_DONE;
+			this.clientState = ClientState.JOB_PICKING_DONE;
 		} else {
-			console.error(`Cannot send card data when in state ${this.gameState}`);
+			console.error(`Cannot send card data when in state ${this.clientState}`);
 		}
 	};
 
 	sendInterceptCardData = (card_id: string) => {
-		if (this.gameState != ClientState.INTERVIEWER) {
+		if (this.clientState != ClientState.INTERVIEWER) {
 			console.error(`Cannot send intercept card data when not in interviewer state`);
 			return;
 		}
@@ -345,7 +345,7 @@ export class JobbersWebClient {
 	};
 
 	sendScoreSubmission = (salaryCents: number) => {
-		if (this.gameState != ClientState.VOTING) {
+		if (this.clientState != ClientState.VOTING) {
 			console.error(`Cannot submit score when not in voting state`);
 			return;
 		}
@@ -355,6 +355,6 @@ export class JobbersWebClient {
 				score_in_cents: salaryCents
 			} as ScoreSubmissionMessage)
 		);
-		this.gameState = ClientState.VOTING_DONE;
+		this.clientState = ClientState.VOTING_DONE;
 	};
 }
