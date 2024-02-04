@@ -16,7 +16,7 @@
 	// Menu related
 	let name: string = '';
 	let roomCode: string = '';
-	let serverAddress: string = '';
+	let serverAddress: string = 'wss://ggjp-cc95dfe6cb29.herokuapp.com/connect'; // TODO: Make this a config file
 	let menuButtonDisabled: boolean = false;
 	$: menuButtonDisabled = name.length === 0 || roomCode.length === 0 || serverAddress.length === 0;
 
@@ -63,8 +63,8 @@
 	<FlexContainer>
 		<BigText text="Octopations" fontSize="4em" />
 		<MyNameIs bind:name bind:roomCode />
-		<h2 style="margin: 0">Server WebSocket Address</h2>
-		<input type="text" bind:value={serverAddress} />
+		<!-- <h2 style="margin: 0">Server WebSocket Address</h2>
+		<input type="text" bind:value={serverAddress} /> -->
 		<StylizedButton disabled={menuButtonDisabled} text="Join Game" on:click={joinGame} />
 	</FlexContainer>
 {:else if clientState == ClientState.CONNECTING}
