@@ -238,6 +238,7 @@ export class JobbersWebClient {
 
 	private onClose = (event: CloseEvent) => {
 		console.log('Websocket closed');
+		this.onError();
 	};
 
 	private onWSError = (event: Event) => {
