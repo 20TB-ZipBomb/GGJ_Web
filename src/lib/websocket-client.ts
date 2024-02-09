@@ -219,6 +219,13 @@ export class JobbersWebClient {
 			} else if (message.message_type == MessageType.GAME_FINISHED) {
 				this.clientState = ClientState.GAME_FINISHED;
 			}
+		})
+    .set(ClientState.GAME_FINISHED, (message: Message) => {
+			if (message.message_type == MessageType.GAME_START) {
+				this._jobsToCreateRemaining = message.number_of_jobs;
+				this.onGameStarted(message.number_of_jobs);
+				this.clientState = ClientState.JOB_CREATION;
+			}
 		});
 
 	constructor(serverAddress: string, roomCode: string, playerName: string) {

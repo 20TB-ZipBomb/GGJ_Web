@@ -48,6 +48,7 @@
 		};
 		jobberClient.onGameStarted = (numJobsToMake: number) => {
 			jobsToMake = numJobsToMake;
+      createdJobTexts = [];
 		};
 		jobberClient.onError = () => {
 			clientState = ClientState.MENU;
