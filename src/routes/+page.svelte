@@ -15,8 +15,8 @@
 
 	// Menu related
 	let name: string = '';
-	let roomCode: string = (window.location.href == 'https://octopations.netlify.app/') ? '' : '1234';
-	let serverAddress: string = (window.location.href == 'https://octopations.netlify.app/') ? 'wss://ggjp-cc95dfe6cb29.herokuapp.com/connect' : 'ws://localhost:4040/connect'; // TODO: Make this a config file
+	let roomCode: string = '';
+	let serverAddress: string = 'wss://ggjp-cc95dfe6cb29.herokuapp.com/connect'; // TODO: Make this a config file
 	let menuButtonDisabled: boolean = false;
 	$: menuButtonDisabled = name.length === 0 || roomCode.length === 0 || serverAddress.length === 0;
 
@@ -57,6 +57,8 @@
 
 	onMount(() => {
 		name = localStorage.getItem('name') || '';
+    roomCode = (window.location.href == 'https://octopations.netlify.app/') ? '' : '1234';
+    serverAddress = (window.location.href == 'https://octopations.netlify.app/') ? 'wss://ggjp-cc95dfe6cb29.herokuapp.com/connect' : 'ws://localhost:4040/connect';
 	});
 </script>
 
